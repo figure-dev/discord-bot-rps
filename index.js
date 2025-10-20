@@ -40,7 +40,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     );
 
     const msg = await interaction.reply({
-      content: `🎮 **${jugador1.username}**, elige tu jugada contra mí:`,
+      content: `🎮 **${jugador1.username}**, elige tu jugada contra mí, parguelon`,
       components: [botones],
       fetchReply: true,
     });
@@ -143,11 +143,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 // --- Función para decidir ganador ---
 function determinarGanador(j1, j2, e1, e2) {
-  if (e1 === e2) return "😐 ¡Empate!";
+  if (e1 === e2) return "😐 ¡Empate! A ver si espabilais";
   const gana = { piedra: "tijera", tijera: "papel", papel: "piedra" };
   return gana[e1] === e2
-    ? `🎉 **${j1.username} gana! 🏆**`
-    : `🎉 **${j2.username} gana! 🏆**`;
+    ? `🎉 **${j1.username} gana! oleole 🏆**`
+    : `🎉 **${j2.username} gana! oleole 🏆**`;
 }
 
 client.login(process.env.DISCORD_TOKEN);
