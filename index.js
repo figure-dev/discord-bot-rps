@@ -91,7 +91,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   );
 
   const msg = await interaction.reply({
-    content: `🎮 **${jugador1.username}** ha retado a **${jugador2.username}** a Piedra, Papel o Tijera!\n\nAmbos deben elegir su jugada.`,
+    content: `🎮 **${jugador1.username}** ha retado a **${jugador2.username}** a Piedra, Papel o Tijera!\n\n Elijan la jugada rapidito a poder ser.`,
     components: [botones],
     fetchReply: true,
   });
@@ -107,7 +107,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const jugador = btnInteraction.user;
 
     if (![jugador1.id, jugador2.id].includes(jugador.id)) {
-      return btnInteraction.reply({ content: "❌ No participas en esta partida.", ephemeral: true });
+      return btnInteraction.reply({ content: "❌ No participas en esta partida, tontito.", ephemeral: true });
     }
 
     if (elecciones.has(jugador.id)) {
@@ -146,8 +146,8 @@ function determinarGanador(j1, j2, e1, e2) {
   if (e1 === e2) return "😐 ¡Empate! A ver si espabilais";
   const gana = { piedra: "tijera", tijera: "papel", papel: "piedra" };
   return gana[e1] === e2
-    ? `🎉 **${j1.username} gana! oleole 🏆**`
-    : `🎉 **${j2.username} gana! oleole 🏆**`;
+    ? `🎉 **${j1.username} gana! oleole 🏆** ${j2.username} espabila que te come la vida`
+    : `🎉 **${j2.username} gana! oleole 🏆** ${j1.username} espabila que te come la vida`;
 }
 
 client.login(process.env.DISCORD_TOKEN);
