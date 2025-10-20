@@ -143,7 +143,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 // --- función para decidir el ganador ---
 function determinarGanador(j1, j2, e1, e2) {
-  if (e1 === e2) return "😐 ¡Empate! A ver si espabilais";
+  if (e1 === e2) return "😐 ¡Empate! A ver si espabilamos";
   const gana = { piedra: "tijera", tijera: "papel", papel: "piedra" };
   return gana[e1] === e2
     ? `🎉 **${j1.username} gana! oleole 🏆** ${j2.username} espabila que te come la vida`
