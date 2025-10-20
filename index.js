@@ -12,12 +12,12 @@ import {
 import dotenv from "dotenv";
 dotenv.config();
 
-// --- Servidor Express para mantener el bot activo ---
+// --- servidor express para mantener el bot activo ---
 const app = express();
-app.get("/", (req, res) => res.send("✅ El bot está activo y funcionando correctamente."));
-app.listen(3000, () => console.log("🌐 Servidor web encendido en el puerto 3000."));
+app.get("/", (req, res) => res.send("El bot está activo y funcionando correctamente"));
+app.listen(3000, () => console.log("Servidor web encendido en el puerto 3000"));
 
-// --- Inicializar el cliente de Discord ---
+// --- inicializar el cliente de Discord ---
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once(Events.ClientReady, () => {
@@ -31,7 +31,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   const jugador1 = interaction.user;
   const jugador2 = interaction.options.getUser("oponente");
 
-  // --- MODO CONTRA EL BOT ---
+  // --- modo contra el bot ---
   if (modo === "bot") {
     const botones = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setCustomId("piedra").setLabel("🗿 Piedra").setStyle(ButtonStyle.Primary),
@@ -52,7 +52,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
     collector.on("collect", async (btnInteraction) => {
       if (btnInteraction.user.id !== jugador1.id) {
-        return btnInteraction.reply({ content: "❌ No estás jugando.", ephemeral: true });
+        return btnInteraction.reply({ content: "❌ No estás jugando", ephemeral: true });
       }
 
       await btnInteraction.deferUpdate();
@@ -71,18 +71,18 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
     collector.on("end", async (_, reason) => {
       if (reason !== "messageDelete" && reason !== "limit") {
-        await interaction.editReply({ content: "⏰ Se acabó el tiempo.", components: [] });
+        await interaction.editReply({ content: "⏰ Se acabó el tiempo", components: [] });
       }
     });
     return;
   }
 
-  // --- MODO CONTRA OTRO USUARIO ---
+  // --- modo contra otro usuario ---
   if (!jugador2) {
-    return interaction.reply("⚠️ Debes mencionar un oponente si eliges jugar contra un usuario.");
+    return interaction.reply("⚠️ Debes mencionar un oponente si eliges jugar contra un usuario");
   }
-  if (jugador2.bot) return interaction.reply("🚫 No puedes retar a un bot.");
-  if (jugador1.id === jugador2.id) return interaction.reply("❌ No puedes jugar contra ti mismo.");
+  if (jugador2.bot) return interaction.reply("❌ No puedes retar a un bot");
+  if (jugador1.id === jugador2.id) return interaction.reply("❌ No puedes jugar contra ti mismo");
 
   const botones = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId("piedra").setLabel("🗿 Piedra").setStyle(ButtonStyle.Primary),
@@ -91,7 +91,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   );
 
   const msg = await interaction.reply({
-    content: `🎮 **${jugador1.username}** ha retado a **${jugador2.username}** a Piedra, Papel o Tijera!\n\n Elijan la jugada rapidito a poder ser.`,
+    content: `🎮 **${jugador1.username}** ha retado a **${jugador2.username}** a Piedra, Papel o Tijera!\n\n Elijan la jugada rapidito a poder ser`,
     components: [botones],
     fetchReply: true,
   });
@@ -107,18 +107,18 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const jugador = btnInteraction.user;
 
     if (![jugador1.id, jugador2.id].includes(jugador.id)) {
-      return btnInteraction.reply({ content: "❌ No participas en esta partida, tontito.", ephemeral: true });
+      return btnInteraction.reply({ content: "❌ No participas en esta partida, tontito", ephemeral: true });
     }
 
     if (elecciones.has(jugador.id)) {
-      return btnInteraction.reply({ content: "⚠️ Ya elegiste.", ephemeral: true });
+      return btnInteraction.reply({ content: "⚠️ Ya elegiste", ephemeral: true });
     }
 
     await btnInteraction.deferUpdate();
     elecciones.set(jugador.id, btnInteraction.customId);
 
     await btnInteraction.followUp({
-      content: `✅ Has elegido **${btnInteraction.customId}**.`,
+      content: `✅ Has elegido **${btnInteraction.customId}**`,
       ephemeral: true,
     });
 
@@ -127,7 +127,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
   collector.on("end", async (_, reason) => {
     if (reason !== "completado") {
-      return interaction.editReply({ content: "⏰ El tiempo se acabó.", components: [] });
+      return interaction.editReply({ content: "⏰ El tiempo se acabó", components: [] });
     }
 
     const eleccion1 = elecciones.get(jugador1.id);
@@ -141,7 +141,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   });
 });
 
-// --- Función para decidir ganador ---
+// --- función para decidir el ganador ---
 function determinarGanador(j1, j2, e1, e2) {
   if (e1 === e2) return "😐 ¡Empate! A ver si espabilais";
   const gana = { piedra: "tijera", tijera: "papel", papel: "piedra" };
